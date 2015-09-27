@@ -1,0 +1,58 @@
+
+
+/**
+ * Simulates python's range function
+ * @param <T>
+ */
+public class Range<T> implements Iterable<Integer> {
+	
+	Integer current;
+	int minimum;
+	int maximum; 
+	int increment;
+
+
+	public Range(int min, int max, int incr) {
+		minimum=min;
+		maximum=max;
+		increment=incr;
+		java.util.Iterator<Integer> itr1 = iterator(); 
+				
+		for(int k=min; k<max;k+=increment){
+			current=(Integer)k;
+			System.out.print("\b"+k);
+		}
+	}
+
+	public Range(int min, int max) {
+		// change this
+	}
+
+	/**
+	 * Obtains an Iterator object used to traverse the list
+	 * 
+	 * @return an iterator pointed at the beginMarker
+	 */
+	public java.util.Iterator<Integer> iterator() {
+		return new RangeIterator();
+	}
+	
+	private class RangeIterator implements java.util.Iterator<Integer> {
+
+		
+		public boolean hasNext() {
+			if (current<maximum)
+				return true;
+			return false;
+		}
+
+		
+		public Integer next() {
+			if (!hasNext())
+				throw new java.util.NoSuchElementException();
+			return current;
+		}
+		
+	}
+
+}

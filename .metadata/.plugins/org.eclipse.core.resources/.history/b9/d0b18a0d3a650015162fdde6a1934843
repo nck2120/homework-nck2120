@@ -1,0 +1,111 @@
+import SimpleLinkedList.Node;
+
+/**
+ * Simulates python's range function
+ */
+public class Range implements Iterable<Integer> {
+	
+	SimpleLinkedList<Integer> list = new SimpleLinkedList<Integer>();
+	Node<Integer> endMarker;
+	Node<Integer> beginMarker;
+
+
+	public Range(int min, int max, int increment) {
+		// change this
+	}
+
+	public Range(int min, int max) {
+		// change this
+	}
+
+	/**
+	 * Obtains an Iterator object used to traverse the list
+	 * 
+	 * @return an iterator pointed at the beginMarker
+	 */
+	public java.util.Iterator<Integer> iterator() {
+		return new RangeIterator();
+	}
+	
+	private class Node<Integer> {
+		public Node(Integer d, Node<Integer> p, Node<Integer> n) {
+			data = d;
+			prev = p;
+			next = n;
+		}
+
+		public Integer data;
+		public Node<Integer> prev;
+		public Node<Integer> next;
+	}
+	
+	private class RangeIterator implements java.util.Iterator<Integer> {
+		private Node<Integer> current = null;
+		private boolean okToRemove = false;
+		
+		
+		int itrIndex = 0; //index is reset every time iterator is called 
+		
+		public boolean hasPrev(){
+			if(current.next.equals(endMarker)) { 
+				current = endMarker.prev;
+				itrIndex = list.size()-1; //beginning idx # is list size -1 
+			}
+			return current != beginMarker;
+		}
+		
+		/*traverses to prev, but returns current data*/
+		public Integer prev(){
+			
+			if(!hasPrev())
+				throw new java.util.NoSuchElementException();
+			
+			Integer prevItem = current.data; //returns the data of the node it's currently at 
+								//not intuitive because itr-user thinks that iteration begins
+								//at endMarker
+			current = current.prev;
+			itrIndex--; //decrements index to represent change in current node
+			
+			okToRemove = true;
+			return prevItem;
+		}
+		
+		public boolean hasNext() { 
+			if (current.prev.equals(beginMarker)){
+				current = beginMarker.next;
+			}
+			return current != endMarker; 
+			}
+		
+		/*traverses to next, but returns current data*/
+		public java.lang.Integer next() {
+			if (!hasNext())
+				throw new java.util.NoSuchElementException();
+			
+			java.lang.Integer nextItem = current.data;
+			current = current.next;
+			itrIndex++;
+			
+			okToRemove = true;
+			return nextItem;
+		}
+		
+		public void remove() {
+			if (!okToRemove)
+				throw new IllegalStateException();
+
+			list.remove(current.prev);
+			
+			/*ensures that remove() cannot be called twice during a single step in iteration*/
+			okToRemove = false;
+		}
+		
+		
+		public void add(Integer addedInt){list.add(itrIndex, addedInt);}
+		
+		
+		/*eliminates the use of counters elsewhere in program*/
+		public int index(){return itrIndex;}
+		
+	}
+}
