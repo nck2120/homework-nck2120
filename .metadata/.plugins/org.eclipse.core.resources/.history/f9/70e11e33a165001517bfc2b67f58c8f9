@@ -27,11 +27,11 @@ public class Range  {
 			System.out.print(itr1.next() + " ");	
 		}
 	}
-	public Range(int start, int stop) {
+	public Range(int min, int max) {
 		int incr = 1;
 		
-		minimum= (Integer) start;
-		maximum= (Integer) stop;
+		minimum= (Integer) min;
+		maximum= (Integer) max;
 		increment = (Integer) incr;
 		
 		current = minimum; //pointer; starts at min
