@@ -81,7 +81,7 @@ public class Range  {
 	public static void main(String[] args) {
 		int min = 0;
 		int max = 10;
-		int incr = -1;
+		int incr = 1;
 		
 		System.out.println(new Range(min, max, incr));
 

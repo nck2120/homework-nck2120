@@ -25,7 +25,7 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr1 = iterator(); 
 		
-		System.out.println(create(itr1));
+		create(itr1);
 	}
 	public Range(int start, int stop) {
 		int incr = 1;
@@ -38,14 +38,14 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr2 = iterator(); 
 
-		System.out.println(create(itr2));
+		create(itr2);
 	}
 	
-	public String create(java.util.Iterator<Integer> iterator){
+	public SimpleLinkedList<Integer> create(java.util.Iterator<Integer> iterator){
 		while(iterator.hasNext()){
 			list.add(iterator.next());
 		}
-		return list.toString();
+		return list;
 	}
 
 	
@@ -76,15 +76,6 @@ public class Range  {
 			return nextInt;
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-		int min = 0;
-		int max = 10;
-		int incr = -1;
-		
-		System.out.println(new Range(min, max, incr));
-
 	}
 
 }
