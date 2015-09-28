@@ -1,0 +1,8 @@
+
+public class rangeTester {
+	public static void main(String args[]){
+		Range<Integer> ranger = new Range(0,5,1);
+		
+		System.out.println(ranger);
+	}
+}

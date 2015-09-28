@@ -250,8 +250,6 @@ public class SimpleLinkedList<T> implements Iterable<T> {
 	
 	/**
 	 * Flips the order of the SimpleLinkedList
-	 * 
-	 * Answer: To make reverse operate in a single timestep you would need to switch the node links for each element.
 	 */
 	public void reverse(){
 		LinkedListIterator itr2= this.iterator();
@@ -274,11 +272,7 @@ public class SimpleLinkedList<T> implements Iterable<T> {
 			
 		}
 	}
-	/**
-	 * It would take O((n-1)+(n-2)+(n-3)...(n-n)) or the arithmetic sum of N
-	 * 
-	 * And to optimize, you'd have to have the list sorted.
-	 */
+	
 	public void removeDuplicates(){
 		LinkedListIterator outsideItr = this.iterator();
 		LinkedListIterator insideItr = this.iterator();
