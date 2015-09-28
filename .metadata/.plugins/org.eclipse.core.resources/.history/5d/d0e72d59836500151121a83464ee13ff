@@ -1,0 +1,14 @@
+
+public class indexOfTester {
+	public static void main(String[] args) {
+		SimpleLinkedList<Integer> testList = new SimpleLinkedList<Integer>();
+	
+		for (int x=0; x<3; x++ ){
+			Integer newInt = (Integer) x;
+			testList.add(newInt);
+		}
+		System.out.println(testList);
+		
+		System.out.println("The #1 is at "+ testList.indexOf(1));
+	}
+}

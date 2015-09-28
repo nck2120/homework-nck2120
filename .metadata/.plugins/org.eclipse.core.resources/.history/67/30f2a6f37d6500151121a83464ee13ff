@@ -1,0 +1,505 @@
+import java.util.Collection;
+
+/**
+ * @author Nayla Kidd
+ * @version Sun Sept 20 20:00
+ * LinkedList class implements a doubly-linked list. Adapted from Weiss, Data
+ * Structures and Algorithm Analysis in Java. 3rd ed.
+ * http://users.cis.fiu.edu/~weiss/dsaajava3/code/SimpleLinkedList.java
+ */
+public class SimpleLinkedList<T> implements Iterable<T> {
+
+	private int size;
+	private Node<T> beginMarker;
+	private Node<T> endMarker;
+	/*why isn't modCount included here?*/
+	
+	/**
+	 * This is the doubly-linked list node class. A node contains
+	 * the data and links to the previous and next nodes, along with
+	 * appropriate constructors.
+	 */
+	private class Node<NodeT> {
+		public Node(NodeT d, Node<NodeT> p, Node<NodeT> n) {
+			data = d;
+			prev = p;
+			next = n;
+		}
+
+		public NodeT data;
+		public Node<NodeT> prev;
+		public Node<NodeT> next;
+	}
+
+	/**
+	 * Construct an empty LinkedList.
+	 */
+	public SimpleLinkedList() {
+		doClear();
+	}
+
+	/**
+	 * Change the size of this collection to zero by initializing the beginning
+	 * and end marker.
+	 */
+	public void doClear() {
+		beginMarker = new Node<>(null, null, null);
+		endMarker = new Node<>(null, beginMarker, null);
+		beginMarker.next = endMarker;
+ 
+		size = 0;
+	}
+
+	/**
+	 * @return the number of items in this collection.
+	 */
+	public int size() {
+		return size;
+	}
+
+	/**
+	 * @return boolean indicating if the linked list is empty
+	 */
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	
+	
+	
+	/**
+	 * Gets the Node at position idx, which must range from lower to upper.
+	 * 
+	 * @param idx
+	 *          index to search at.
+	 * @param lower
+	 *          lowest valid index.
+	 * @param upper
+	 *          highest valid index.
+	 * @return internal node corresponding to idx.
+	 * @throws IndexOutOfBoundsException
+	 *           if index is not between lower and upper, inclusive.
+	 */
+	private Node<T> getNode(int idx, int lower, int upper) {
+		Node<T> p;
+
+		if (idx < lower || idx > upper)
+			throw new IndexOutOfBoundsException("getNode index: " + idx + "; size: "
+					+ size());
+
+		if (idx < size() / 2) { // Search through list from the beginning
+			p = beginMarker.next;
+			for (int i = 0; i < idx; i++)
+				p = p.next;
+		} else { // search through the list from the end
+			p = endMarker;
+			for (int i = size(); i > idx; i--)
+				p = p.prev;
+		}
+
+		return p;
+	}
+
+	/**
+	 * Gets the Node at position idx, which must range from 0 to size( ) - 1.
+	 * 
+	 * @param idx
+	 *          index to search at.
+	 * @return internal node corresponding to idx.
+	 * @throws IndexOutOfBoundsException
+	 *           if index is out of range.
+	 */
+	private Node<T> getNode(int idx) {
+		return getNode(idx, 0, size() - 1);
+	}
+
+	/**
+	 * Returns the item at position idx.
+	 * 
+	 * @param idx
+	 *          the index to search in.
+	 * @throws IndexOutOfBoundsException
+	 *           if index is out of range.
+	 */
+	public T get(int idx) {
+		return getNode(idx).data;
+	}
+
+	
+	/**
+	 * Changes the item at position idx.
+	 * 
+	 * @param idx
+	 *          the index to change.
+	 * @param newVal
+	 *          the new value.
+	 * @return the old value.
+	 * @throws IndexOutOfBoundsException
+	 *           if index is out of range.
+	 */
+	public T set(int idx, T newVal) {
+		Node<T> p = getNode(idx);
+		T oldVal = p.data;
+
+		p.data = newVal;
+		return oldVal;
+	}
+
+	/**
+	 * Adds an item in front of node p, shifting p and all items after it one
+	 * position to the right in the list.
+	 * 
+	 * @param p
+	 *          Node to add before.
+	 * @param x
+	 *          any object.
+	 * @throws IndexOutOfBoundsException
+	 *           if idx < 0 or idx > size()
+	 */
+	private void addBefore(Node<T> p, T x) {
+		Node<T> newNode = new Node<>(x, p.prev, p);
+		newNode.prev.next = newNode;
+		p.prev = newNode;
+		size++;
+	}
+
+	/**
+	 * Adds an item at specified index. Remaining items shift up one index.
+	 * 
+	 * @param x
+	 *          any object.
+	 * @param idx
+	 *          position to add at.
+	 * @throws IndexOutOfBoundsException
+	 *           if idx < 0 or idx > size()
+	 */
+	public void add(int idx, T x) {
+		addBefore(getNode(idx, 0, size()), x);
+	}
+
+	/**
+	 * Adds an item to this collection, at the end.
+	 * 
+	 * @param x
+	 *          any object.
+	 */
+	public void add(T x) {
+		add(size(), x);
+	}
+
+	/**
+	 * Removes the object contained in Node p.
+	 * 
+	 * @param p
+	 *          the Node containing the object.
+	 * @return the item was removed from the collection.
+	 */
+	private T remove(Node<T> p) {
+		p.next.prev = p.prev;
+		p.prev.next = p.next;
+		size--;
+
+		return p.data;
+	}
+
+	/**
+	 * Removes an item from this collection.
+	 * 
+	 * @param idx
+	 *          the index of the object.
+	 * @return the item was removed from the collection.
+	 */
+	public T remove(int idx) {
+		return remove(getNode(idx));
+	}
+
+	/**
+	 * Returns a String representation of this collection.
+	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder("[ ");
+		for (T x : this) {
+			sb.append(x + " ");
+		}
+		sb.append("]");
+
+		return new String(sb);
+	}
+
+	/********* ADD YOUR SOLUTIONS HERE *****************/
+	
+	/**
+	 * @return int that represents the index of the first instance of the object found in list
+	 * 		-1 if not found.
+	 * 
+	 * @param o
+	 * 		desired object to search for.
+	 */
+	@SuppressWarnings("unchecked")
+	public int indexOf(Object o){
+		Collection<T> list = (Collection<T>) SimpleLinkedList.this;
+		Object desiredO = o;
+		LinkedListIterator itr1 = this.iterator();
+		
+		/*put general search in the beginning to not waste time looking if not there*/
+		if(!list.contains(desiredO))
+			return -1; 
+		
+		while(itr1.hasNext()){
+			if(itr1.next().equals(desiredO))
+				break; //breaks out of while loop when found
+		}
+		return itr1.index();
+	}
+	
+	/**
+	 * Flips the order of the SimpleLinkedList
+	 */
+	public void reverse(){
+		LinkedListIterator itr2= this.iterator();
+		
+		Node<T> currentNode = null; //reference to iterated node in list
+		Node<T> prevNode = null; //place holder for previous node
+		
+		while(itr2.hasPrev()){ //hasPrev() is the ending condition
+			currentNode = this.getNode(itr2.index());
+			
+			prevNode = currentNode.prev;
+			
+			if(itr2.index()==this.size-1) //will enact in beginning 
+				currentNode.next=endMarker; 
+			else
+				currentNode.next=prevNode;
+			
+			if(itr2.index()==0) //will enact at end; prev decrements counter from size-1 to 0
+				currentNode.prev=beginMarker; 
+			else
+				currentNode.prev=currentNode.next; 
+			
+			itr2.prev(); //now you need to call next to get to "previous" node
+		}
+	}
+	
+	public void removeDuplicates(){
+		LinkedListIterator outsideItr = this.iterator();
+		LinkedListIterator insideItr = this.iterator();
+		int insIdx = 0;
+		int outIdx = 0;
+		
+		T desiredData;
+		T foundData; //data of insideItr's pointer
+		
+		boolean atStart = true;
+		boolean foundDuplicate = false;
+		
+		while(outsideItr.hasNext()){
+			foundDuplicate = false;
+			System.out.println("You have (re)entered outside while...");
+
+			if(!atStart){
+				outsideItr.next();
+				outIdx++;
+			}
+			
+			atStart = false;
+			desiredData = outsideItr.current.data;
+			
+			/*iterate through list and look for duplicates*/
+			while(insideItr.hasNext()){
+				
+				
+				System.out.println("You have (re)entered inside while...");
+				if(insIdx>outIdx){ //once the inside iterator has caught up to the outside one
+					System.out.println("Inside iterator is now past outside iterator");
+
+					foundData = insideItr.current.data;
+					
+					/*Compare the data of the element at the point of insideItr with that of the desired element */
+					if(foundData.equals(desiredData))  {
+						System.out.println("Found a duplicate at "+insIdx+"...");
+						foundDuplicate=true;
+						insideItr.remove();	
+						System.out.println("Duplicate removed...");
+						
+					}
+				}
+				if (!foundDuplicate){
+					insIdx++;
+				}
+				
+				if(insideItr.hasNext())
+					insideItr.next();
+				
+				
+			}
+			System.out.println("At the end of inside list...");
+
+			
+			/*reset the insideItr to 0 everywhere*/
+			insideItr.itrIndex=outsideItr.itrIndex; 
+			insideItr.current=outsideItr.current.next;
+			insIdx = outIdx; 
+			System.out.println("Inside indices have been reset to "+ outsideItr.current.next);
+
+		}
+	}
+	
+	/**
+	 * interleaves the nodes of this list and another one given as a parameter
+	 * 
+	 * @param other is the SimpleLinkedList that is to be interleaved with this SLL
+	 */
+	public void interleave(SimpleLinkedList<T> other) {
+		LinkedListIterator itrA = this.iterator();
+		LinkedListIterator itrB = other.iterator();
+		
+		/* will work as long as either list has another node to iterate over AND 
+		 * the node in the other list isn't the end Marker */
+		while ( (itrA.hasNext() || itrB.hasNext()) && !itrB.current.equals(endMarker) ) {
+			if(itrA.itrIndex<this.size) { 
+				itrA.next(); //iterator starts out on second node in list
+				
+				/*new node created equals the next of old previous*/
+				/*new node created makes old previous its previous*/
+				Node<T> newPrev = new Node<T>(itrB.current.data, itrA.current.prev, null);
+				itrA.current.prev.next = newPrev;
+			
+				/*new node created equals new previous of current node*/
+				/*new node created makes current node its next node*/
+				itrA.current.prev = newPrev;
+				newPrev.next = itrA.current;
+				
+				itrB.next();
+			}else{ //in the case that this list is smaller than other list
+				itrA.add(itrB.current.data);
+				itrB.next(); /*valid because while-loop would've tested false @ endMarker otherwise */
+			}	
+		}
+		
+		
+	}
+	
+	
+	
+	
+	 
+	
+	/**
+	 * Obtains an Iterator object used to traverse the collection.
+	 * 
+	 * @return an iterator positioned prior to the first, or past the last, element
+	 */
+	public LinkedListIterator iterator() {
+		return new LinkedListIterator();
+	}
+
+	/**
+	 * This is the implementation of the LinkedListIterator. It maintains a notion
+	 * of a current position and of course the implicit reference to the
+	 * SimpleLinkedList.
+	 * 
+	 * Once it has reached it's desired object, will the iteration end and restart when 
+	 * another element is searched for? The way I've constructed the idx is dependent on 
+	 * that assumption... 
+	 * 
+	 */
+	private class LinkedListIterator implements java.util.Iterator<T> {
+		private Node<T> current = beginMarker.next;
+		private boolean okToRemove = false;
+		
+		
+		int itrIndex = 0; //index is reset every time iterator is called 
+		
+		public boolean hasPrev(){
+			if(current.next.equals(endMarker)) { 
+				current = endMarker.prev;
+				itrIndex = SimpleLinkedList.this.size()-1; //beginning idx # is list size -1 
+			}
+			return current != beginMarker;
+		}
+		
+		/*traverses to prev, but returns current data*/
+		public T prev(){
+			
+			if(!hasPrev())
+				throw new java.util.NoSuchElementException();
+			
+			T prevItem = current.data; //returns the data of the node it's currently at 
+								//not intuitive because itr-user thinks that iteration begins
+								//at endMarker
+			current = current.prev;
+			itrIndex--; //decrements index to represent change in current node
+			
+			okToRemove = true;
+			return prevItem;
+		}
+		
+		public boolean hasNext() { 
+			if (current.prev.equals(beginMarker)){
+				current = beginMarker.next;
+			}
+			return current != endMarker; 
+			}
+		
+		/*traverses to next, but returns current data*/
+		public T next() {
+			if (!hasNext())
+				throw new java.util.NoSuchElementException();
+			
+			T nextItem = current.data;
+			current = current.next;
+			itrIndex++;
+			
+			okToRemove = true;
+			return nextItem;
+		}
+		
+		/**
+		 * removes the Node before the current one
+		 */
+		public void remove() {
+			if (!okToRemove)
+				throw new IllegalStateException();
+			
+			next();
+			
+			SimpleLinkedList.this.remove(current.prev);
+			itrIndex--;
+			
+			/*ensures that remove() cannot be called twice during a single step in iteration*/
+			okToRemove = false;
+		}
+		
+		/**
+		 * inserts a desired object into the current position
+		 * @param addedObj is the object to be added
+		 */
+		public void add(T addedObj){
+			SimpleLinkedList.this.add(itrIndex, addedObj);
+			itrIndex++; //the index will increase as an object was placed in its old pos 
+		}
+		
+		
+		/*eliminates the use of counters elsewhere in program*/
+		public int index(){return itrIndex;}
+		
+	}
+
+	/**
+	 * Test the linked list.
+	 */
+	public static void main(String[] args) {
+		SimpleLinkedList<Integer> lst = new SimpleLinkedList<>();
+
+		for (int i = 0; i < 10; i++)
+			lst.add(i);
+		for (int i = 20; i < 30; i++)
+			lst.add(0, i);
+
+		lst.remove(0);
+		lst.remove(lst.size() - 1);
+
+		System.out.println(lst);
+
+	}
+}

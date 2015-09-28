@@ -1,0 +1,25 @@
+
+public class tester2 {
+	public static void main(String[] args) {
+		SimpleLinkedList<Integer> testListA = new SimpleLinkedList<Integer>();
+		SimpleLinkedList<Integer> testListB = new SimpleLinkedList<Integer>();
+
+		for (int x=0; x<5; x++ ){
+			Integer newInt = (Integer) x;
+			testListA.add(newInt);
+		}
+		for (int x=0; x<10; x++ ){
+			Integer newInt = (Integer) x;
+			testListB.add(newInt);
+		}
+		
+		System.out.println(testListA);
+		
+		testListA.interleave(testListB);
+		
+		System.out.println(testListA);
+
+		
+
+	}
+}

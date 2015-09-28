@@ -1,0 +1,20 @@
+
+public class reverseTester {
+	public static void main(String[] args) {
+		SimpleLinkedList<Integer> testList = new SimpleLinkedList<Integer>();
+	
+		for (int x=0; x<3; x++ ){
+			Integer newInt = (Integer) x;
+			testList.add(newInt);
+		}
+		
+		System.out.println(testList);
+		
+		testList.reverse();
+		
+		System.out.println(testList);
+
+		
+
+	}
+}

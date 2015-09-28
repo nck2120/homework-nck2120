@@ -1,0 +1,25 @@
+
+public class tester {
+	
+	public static void main(String[] args) {
+		SimpleLinkedList<Integer> testList = new SimpleLinkedList<Integer>();
+	
+		for (int x=0; x<10; x++ ){
+			Integer newInt = (Integer) x;
+			testList.add(newInt);
+		}
+		
+		for (int x=0; x<10; x++ ){
+			Integer newInt = (Integer) 0;
+			testList.add(newInt);
+		}
+		System.out.println(testList);
+		
+		testList.removeDuplicates();
+		
+		System.out.println(testList);
+
+		
+
+	}
+}
