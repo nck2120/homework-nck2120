@@ -23,7 +23,7 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr1 = iterator(); 
 		
-		createString(itr1);
+		return createString(itr1);
 	}
 	public Range(int start, int stop) {
 		int incr = 1;

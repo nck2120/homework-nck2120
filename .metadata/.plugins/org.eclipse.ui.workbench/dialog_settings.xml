@@ -20,6 +20,7 @@
 		<item value="false" key="WizardFileSystemResourceExportPage1.STORE_OVERWRITE_EXISTING_FILES_ID"/>
 		<item value="false" key="WizardFileSystemResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardFileSystemResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="/Users/naylakidd/Desktop/Classes/Data Structures/homework-nck2120/1"/>
 			<item value="/Users/naylakidd/Desktop/Classes/Data Structures/homework-nck2120/homeworks/1/src"/>
 		</list>
 	</section>

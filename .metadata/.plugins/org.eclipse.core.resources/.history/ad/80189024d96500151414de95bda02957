@@ -13,7 +13,7 @@ public class Range  {
 
 	StringBuilder sb = new StringBuilder();
 
-	public Range(int start, int stop, int incr) {
+	public String Range(int start, int stop, int incr) {
 		minimum = (Integer) start;
 		maximum = (Integer) stop;
 		/*Do something when a negative number is entered*/
@@ -23,7 +23,7 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr1 = iterator(); 
 		
-		createString(itr1);
+		return createString(itr1);
 	}
 	public Range(int start, int stop) {
 		int incr = 1;

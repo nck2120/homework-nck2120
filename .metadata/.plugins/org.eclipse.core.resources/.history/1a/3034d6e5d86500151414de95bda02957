@@ -43,10 +43,13 @@ public class Range  {
 		while(iterator.hasNext()){
 			sb.append(iterator.next());
 		}
-		return new String(sb);
+		return String(sb);
 	}
 
-	
+	private String String(StringBuilder sb2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	/**
 	 * Obtains an Iterator object used to traverse the list
 	 * 
