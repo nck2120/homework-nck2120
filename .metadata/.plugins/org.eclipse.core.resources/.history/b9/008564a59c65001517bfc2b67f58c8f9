@@ -4,7 +4,7 @@
  * Simulates python's range function
  * @param <T>
  */
-public class Range  {
+public class Range implements Iterable<Integer> {
 	
 	Integer current;
 	Integer minimum;

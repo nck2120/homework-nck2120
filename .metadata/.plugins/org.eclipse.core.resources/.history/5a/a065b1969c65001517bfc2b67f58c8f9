@@ -4,7 +4,7 @@
  * Simulates python's range function
  * @param <T>
  */
-public class Range  {
+public class Range<T> implements Iterable<Integer> {
 	
 	Integer current;
 	Integer minimum;
@@ -12,9 +12,9 @@ public class Range  {
 	Integer increment;
 
 
-	public Range(int start, int stop, int incr) {
-		minimum = (Integer) start;
-		maximum = (Integer) stop;
+	public Range(int min, int max, int incr) {
+		minimum = (Integer) min;
+		maximum = (Integer) max;
 		/*Do something when a negative number is entered*/
 		increment = (Integer) incr;
 		
