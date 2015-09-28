@@ -11,7 +11,6 @@ public class Range  {
 	Integer maximum; 
 	Integer increment;
 
-	StringBuilder sb = new StringBuilder();
 
 	public Range(int start, int stop, int incr) {
 		minimum = (Integer) start;
@@ -23,7 +22,10 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr1 = iterator(); 
 		
-		createString(itr1);
+		
+		while(itr1.hasNext()){
+			System.out.print(itr1.next() + " ");	
+		}
 	}
 	public Range(int start, int stop) {
 		int incr = 1;
@@ -36,20 +38,11 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr2 = iterator(); 
 
-		createString(itr2);
-	}
-	
-	public String createString(java.util.Iterator<Integer> iterator){
-		while(iterator.hasNext()){
-			sb.append(iterator.next());
+		while(itr2.hasNext()) {
+			System.out.print(itr2.next() + " ");
 		}
-		return String(sb);
 	}
 
-	private String String(StringBuilder sb2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	/**
 	 * Obtains an Iterator object used to traverse the list
 	 * 

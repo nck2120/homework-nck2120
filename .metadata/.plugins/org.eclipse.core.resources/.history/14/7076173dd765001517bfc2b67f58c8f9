@@ -23,7 +23,7 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr1 = iterator(); 
 		
-		createString(itr1);
+		present(itr1);
 	}
 	public Range(int start, int stop) {
 		int incr = 1;
@@ -36,10 +36,10 @@ public class Range  {
 		
 		java.util.Iterator<Integer> itr2 = iterator(); 
 
-		createString(itr2);
+		present(itr2);
 	}
 	
-	public String createString(java.util.Iterator<Integer> iterator){
+	public String present(java.util.Iterator<Integer> iterator){
 		while(iterator.hasNext()){
 			sb.append(iterator.next());
 		}
