@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+
+public class myStack {
+	ArrayList<Character> theArray = new ArrayList<Character>(); 
+	int topOfStack = -1;
+	
+	public void push(char c) {
+		topOfStack++;
+		theArray.add((Character) c);
+	}
+	
+	public char pop() {
+		char d = theArray.get(topOfStack);
+		theArray.remove(topOfStack);
+		topOfStack--;
+		
+		return d;	
+	}
+	
+	public int size() {
+		return theArray.size();
+	}
+	
+}

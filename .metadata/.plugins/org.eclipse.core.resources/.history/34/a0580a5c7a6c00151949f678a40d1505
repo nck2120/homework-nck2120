@@ -1,0 +1,17 @@
+import java.util.ArrayList;
+
+public class myStack {
+	ArrayList<Character> theArray = new ArrayList<Character>(); 
+	int topOfStack = -1;
+	
+	public void push(char c) {
+		topOfStack++;
+		theArray.add((Character) c);
+	}
+	
+	public void pop() {
+		theArray.remove(topOfStack);
+		topOfStack--;
+	}
+	
+}

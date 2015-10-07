@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="String" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="@Override"/>
+			<item value="range"/>
 			<item value="string"/>
 			<item value="sb"/>
 			<item value="public int indexOf(Object o)"/>
 			<item value="size"/>
 			<item value="remove"/>
 			<item value="T"/>
-			<item value="NodeInteger"/>
-			<item value="range"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="Integer"/>
 			<item value="atEnd"/>
 			<item value="atLast"/>

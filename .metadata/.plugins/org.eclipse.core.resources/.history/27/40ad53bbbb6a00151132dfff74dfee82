@@ -1,0 +1,72 @@
+// This class should contain your implementation of the Buffer interface.
+import java.util.Deque;
+
+public class FastBuffer implements Buffer{
+
+	int size = 0;
+	char[] bufferArray;
+	int cursorPos = 0;
+	
+	@Override
+	public int size() {
+		return size;
+	}
+
+	@Override
+	public void load(char[] initial, int cursorPosition) {
+		bufferArray = initial;
+		cursorPos = cursorPosition;
+		
+		
+	}
+
+	/** convert the current buffer contents to an array
+	  returnArray.length == size()
+	 */
+	public char[] toArray() {
+		return bufferArray;
+	}
+
+	@Override
+	public int getCursor() {
+		return cursorPos;
+	}
+
+	@Override
+	public void setCursor(int j) {
+		cursorPos = j;
+		
+	}
+
+	@Override
+	public void moveRight() {
+		cursorPos++;
+		
+	}
+
+	@Override
+	public void moveLeft() {
+		cursorPos--;
+		
+	}
+
+	public void insertLeft(char c) {
+		bufferArray[cursorPos-1] = c;
+		
+	}
+
+	public char deleteRight() {
+		char deletedChar = bufferArray[cursorPos+1];
+		bufferArray[cursorPos+1] = '\0';
+		
+		return deletedChar;
+	}
+	
+	public char deleteLeft() {
+		char deletedChar = bufferArray[cursorPos-1];
+		bufferArray[cursorPos-1] = '\0';
+		
+		return deletedChar;
+	}
+	
+}

@@ -1,0 +1,58 @@
+import java.util.*;
+
+public class CountOut {
+
+	static Queue<Integer> remainingPlayers = new LinkedList<Integer>();
+    static Queue<Integer> popHistory = new LinkedList<Integer>();
+	
+	@SuppressWarnings("unchecked")
+	public static List<Integer> play(int n, int k) {
+		
+		/*Adding players to circle*/
+		int p = 0;
+
+		while(p!=(n-1)){
+			remainingPlayers.add((Integer)p);
+		}
+		System.out.println("while loop ended at "+p);
+		
+		System.out.println("The winner is "+findWinner(n,k));
+		
+		return (List<Integer>) popHistory;
+
+	}
+	
+	/**
+	 * Modifies remainingPlayers and gameHistory to be returned by play(...) and returns the 
+	 * winning Integer itself.
+	 * 
+	 * @param n is the number of players 
+	 * @param k
+	 * @return
+	 */
+	public static Integer findWinner(int n, int k) {
+		Integer winner = 0; 
+		Integer zero = 0; 
+		
+		while (!remainingPlayers.isEmpty()){
+			int c = 0;
+			
+			for(c=0; c<=k; c++){
+				popHistory.add(remainingPlayers.poll());		
+			}
+			
+			for(c=0; c<k; c++)
+				/*this won't work because history includes people counted out
+				 * maybe you shouldn't use a queue for your history*/
+				remainingPlayers.add(popHistory.poll());
+		}
+		/*retrieve last added to */
+		return popHistory.
+	}
+
+
+	public static Integer findWinnerRec(int n, int k) {
+
+
+	}
+}

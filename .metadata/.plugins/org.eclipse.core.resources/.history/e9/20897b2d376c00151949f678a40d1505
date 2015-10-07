@@ -1,0 +1,71 @@
+import java.util.*;
+
+public class CountOut {
+
+	static Queue<Integer> remainingPlayers = new LinkedList<Integer>();
+    static LinkedList<Integer> popHistory = new LinkedList<Integer>();
+    
+    
+	@SuppressWarnings("unchecked")
+	public static List<Integer> play(int n, int k) {
+		
+		/*Adding players to circle*/
+		int p = 0;
+		while(p!=(n-1)){
+			remainingPlayers.add((Integer)p);
+			p++;
+		}
+		
+		System.out.println("while loop ended at "+p);
+		
+		System.out.println("The winner is "+findWinner(n,k));
+		
+		return popHistory;
+
+	}
+	
+	/**
+	 * Modifies remainingPlayers and gameHistory to be returned by play(...) and returns the 
+	 * winning Integer itself.
+	 * 
+	 * @param n is the number of players 
+	 * @param k
+	 * @return
+	 */
+	public static Integer findWinner(int n, int k) {
+		int pointer = 0;
+		
+		while (!remainingPlayers.isEmpty()){
+			
+			/*get to the excluded player by popping all of those in the way*/
+			for(int c=0; c<=k; c++){
+				popHistory.add(remainingPlayers.poll());		
+			}
+			
+			/*add the previously popped players (that aren't excluded)
+			 * to the end of remaining players list IN ORDER*/
+			for(int c=0; c<k; c++){
+				/*adding and removing all except for the kth player*/
+				remainingPlayers.add(popHistory.get(pointer));
+				popHistory.remove(pointer);
+			}	
+			pointer++;
+		}
+		/*retrieve winner which is last added to popHistory */
+		return popHistory.getLast();
+	}
+
+
+	public static Integer findWinnerRec(int n, int k) {
+		/*player counted out in each round is (num+1)%k=0*/
+		
+				
+		if (n==0)
+			return lastOut;
+		else
+			
+		return null;
+
+
+	}
+}
